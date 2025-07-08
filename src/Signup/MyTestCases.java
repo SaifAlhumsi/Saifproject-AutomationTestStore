@@ -1,5 +1,6 @@
 package Signup;
 
+import java.util.List;
 import java.util.Random;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,6 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.yaml.snakeyaml.events.Event.ID;
 
 public class MyTestCases {
 
@@ -17,6 +19,9 @@ public class MyTestCases {
 	String SignupPage = "https://automationteststore.com/index.php?rt=account/create";
 	Random rand = new Random();
 
+	String TheUserName;
+	String ThePassword = "Test@1234";
+
 	@BeforeTest
 	public void MySetup() {
 
@@ -24,7 +29,7 @@ public class MyTestCases {
 		driver.manage().window().maximize();
 	}
 
-	@Test
+	@Test(priority = 1, enabled = true)
 	public void Signup() throws InterruptedException {
 
 		driver.navigate().to(SignupPage);
@@ -71,9 +76,10 @@ public class MyTestCases {
 		String Address2 = "Amman TlaaelAli";
 		String City = "Amman";
 		String PostalCode = "2342";
-		String Password = "Test@1234";
 
 		// Actions
+
+		TheUserName = randomFirstName + randomLastName + RandomNumberForTheEmail;
 		FirstNameInput.sendKeys(randomFirstName);
 		LastNameInput.sendKeys(randomLastName);
 		EmailInput.sendKeys(Email);
@@ -84,13 +90,12 @@ public class MyTestCases {
 		Address2Input.sendKeys(Address2);
 		CityInput.sendKeys(City);
 
+		int TotalCountries = CountrySelect.findElements(By.tagName("option")).size();
 
-		int numberOfCountryOperations = CountrySelect.findElements(By.tagName("option")).size();
-		
 		Select MySelectForTheCountry = new Select(CountrySelect);
-		int randomCountryIndex = rand.nextInt(1, numberOfCountryOperations);
+		int randomCountryIndex = rand.nextInt(1, TotalCountries);
 		MySelectForTheCountry.selectByIndex(randomCountryIndex);
-		
+
 		// or we can use selectByVisibleText to specify a specific Country
 		// MySelectForTheCountry.selectByVisibleText("Jordan");
 
@@ -105,11 +110,66 @@ public class MyTestCases {
 		// MySelectForTheState.selectByValue("1705");
 
 		PostalCodeInput.sendKeys(PostalCode);
-		LoginNameInput.sendKeys(randomFirstName + randomLastName + RandomNumberForTheEmail);
-		PasswordInput.sendKeys(Password);
-		PasswordConfirmInput.sendKeys(Password);
+		LoginNameInput.sendKeys(TheUserName);
+		PasswordInput.sendKeys(ThePassword);
+		PasswordConfirmInput.sendKeys(ThePassword);
 		AgreeBox.click();
 		ContinueButtton.click();
+
 	}
 
-}
+	@Test(priority = 2, enabled = true)
+	public void Logout() throws InterruptedException {
+		WebElement Logoutbutton = driver.findElement(By.linkText("Logoff"));
+		Logoutbutton.click();
+
+		Thread.sleep(1000);
+
+		WebElement Continuebutton = driver.findElement(By.linkText("Continue"));
+		Continuebutton.click();
+
+	}
+
+	@Test(priority = 3, enabled = true)
+	public void Login() {
+
+		WebElement LoginandRegisterbutton = driver.findElement(By.partialLinkText("Login or register"));
+		LoginandRegisterbutton.click();
+
+		WebElement Loginname = driver.findElement(By.id("loginFrm_loginname"));
+		WebElement Password = driver.findElement(By.id("loginFrm_password"));
+		Loginname.sendKeys(TheUserName);
+		Password.sendKeys(ThePassword);
+
+		WebElement Loginbutton = driver.findElement(By.xpath("//button[normalize-space()='Login']"));
+		Loginbutton.click();
+	}
+		
+	@Test(priority = 4, enabled = true, invocationCount = 15)
+    public void AddtoCart() throws InterruptedException {
+		driver.navigate().to(TheURL);
+		
+		Thread.sleep(1000);
+		
+		List<WebElement> theListOfIteams = driver.findElements(By.className("prdocutname"));
+		
+		int TotalNumberOfIteams = theListOfIteams.size();
+		
+		int RandomIteamIndex = rand.nextInt(TotalNumberOfIteams);
+		theListOfIteams.get(RandomIteamIndex).click();
+		
+		Thread.sleep(1000);
+		
+		if(driver.getPageSource().contains("Out of Stock")) {
+			driver.navigate().back();
+			System.out.println("Sorry the iteam out of stock");
+			
+		}else  {
+			System.out.println("The iteam is avaliable");
+			
+		}
+		}
+		
+	
+	
+	}
