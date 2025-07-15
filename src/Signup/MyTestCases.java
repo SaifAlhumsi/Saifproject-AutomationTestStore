@@ -140,11 +140,11 @@ public class MyTestCases {
 		
 		boolean ActualResult2 = driver.getCurrentUrl().equals("https://automationteststore.com/index.php?rt=account/logout");
 		boolean ExpectedResult2 = true;
-		Assert.assertEquals(ActualResult, ExpectedResult2);
+		Assert.assertEquals(ActualResult2, ExpectedResult2);
 
 
 		WebElement Continuebutton = driver.findElement(By.linkText("Continue"));
-		//Continuebutton.click();
+		Continuebutton.click();
 
 	}
 
