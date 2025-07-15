@@ -1,36 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="3" total="8" passed="5" failed="0" skipped="0">
+<testng-results ignored="1" total="4" passed="3" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-07-09T00:37:35 AST" name="Default suite" finished-at="2025-07-09T00:38:01 AST" duration-ms="26127">
+  <suite started-at="2025-07-15T21:49:03 AST" name="Default suite" finished-at="2025-07-15T21:49:22 AST" duration-ms="18555">
     <groups>
     </groups>
-    <test started-at="2025-07-09T00:37:35 AST" name="Default test" finished-at="2025-07-09T00:38:01 AST" duration-ms="26127">
+    <test started-at="2025-07-15T21:49:03 AST" name="Default test" finished-at="2025-07-15T21:49:22 AST" duration-ms="18555">
       <class name="Signup.MyTestCases">
-        <test-method is-config="true" signature="MySetup()[pri:0, instance:Signup.MyTestCases@101639ae]" started-at="2025-07-09T00:37:35 AST" name="MySetup" finished-at="2025-07-09T00:37:37 AST" duration-ms="2495" status="PASS">
+        <test-method is-config="true" signature="MySetup()[pri:0, instance:Signup.MyTestCases@101639ae]" started-at="2025-07-15T21:49:03 AST" name="MySetup" finished-at="2025-07-15T21:49:05 AST" duration-ms="2351" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- MySetup -->
-        <test-method signature="AddtoCart()[pri:4, instance:Signup.MyTestCases@101639ae]" started-at="2025-07-09T00:37:37 AST" name="AddtoCart" finished-at="2025-07-09T00:37:41 AST" duration-ms="4324" status="PASS">
+        <test-method signature="Signup()[pri:1, instance:Signup.MyTestCases@101639ae]" started-at="2025-07-15T21:49:05 AST" name="Signup" finished-at="2025-07-15T21:49:17 AST" duration-ms="11678" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- AddtoCart -->
-        <test-method signature="AddtoCart()[pri:4, instance:Signup.MyTestCases@101639ae]" started-at="2025-07-09T00:37:41 AST" name="AddtoCart" finished-at="2025-07-09T00:37:46 AST" duration-ms="4497" status="PASS">
+        </test-method> <!-- Signup -->
+        <test-method signature="Logout()[pri:2, instance:Signup.MyTestCases@101639ae]" started-at="2025-07-15T21:49:17 AST" name="Logout" finished-at="2025-07-15T21:49:19 AST" duration-ms="2122" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- AddtoCart -->
-        <test-method signature="AddtoCart()[pri:4, instance:Signup.MyTestCases@101639ae]" started-at="2025-07-09T00:37:46 AST" name="AddtoCart" finished-at="2025-07-09T00:37:51 AST" duration-ms="5463" status="PASS">
+        </test-method> <!-- Logout -->
+        <test-method signature="Login()[pri:3, instance:Signup.MyTestCases@101639ae]" started-at="2025-07-15T21:49:19 AST" name="Login" finished-at="2025-07-15T21:49:22 AST" duration-ms="2334" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- AddtoCart -->
-        <test-method signature="AddtoCart()[pri:4, instance:Signup.MyTestCases@101639ae]" started-at="2025-07-09T00:37:51 AST" name="AddtoCart" finished-at="2025-07-09T00:37:56 AST" duration-ms="4311" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- AddtoCart -->
-        <test-method signature="AddtoCart()[pri:4, instance:Signup.MyTestCases@101639ae]" started-at="2025-07-09T00:37:56 AST" name="AddtoCart" finished-at="2025-07-09T00:38:01 AST" duration-ms="4969" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- AddtoCart -->
+        </test-method> <!-- Login -->
       </class> <!-- Signup.MyTestCases -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->

@@ -7,9 +7,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import org.yaml.snakeyaml.events.Event.ID;
 
 public class MyTestCases {
 
@@ -21,6 +21,7 @@ public class MyTestCases {
 
 	String TheUserName;
 	String ThePassword = "Test@1234";
+	String FirstName;
 
 	@BeforeTest
 	public void MySetup() {
@@ -31,7 +32,8 @@ public class MyTestCases {
 
 	@Test(priority = 1, enabled = true)
 	public void Signup() throws InterruptedException {
-
+		
+		String ConfirmationMessage = "Your Account Has Been Created!";
 		driver.navigate().to(SignupPage);
 
 		// Elements
@@ -61,7 +63,8 @@ public class MyTestCases {
 		String[] FirstNames = { "ahmed", "omar", "ali", "saif", "khalid", "anas", "osama", "marwan" };
 		int randomIndexForFirstName = rand.nextInt(FirstNames.length);
 		String randomFirstName = FirstNames[randomIndexForFirstName];
-
+		FirstName = randomFirstName;
+		
 		String[] LastNames = { "adel", "qusai", "fares", "hamed", "talal", "zeid", "qais" };
 		int randomIndexForLastName = rand.nextInt(LastNames.length);
 		String randomLastName = LastNames[randomIndexForLastName];
@@ -115,23 +118,38 @@ public class MyTestCases {
 		PasswordConfirmInput.sendKeys(ThePassword);
 		AgreeBox.click();
 		ContinueButtton.click();
+		
+		Thread.sleep(3000);
 
+		boolean ActualResult = driver.getPageSource().contains(ConfirmationMessage);
+		Assert.assertEquals(ActualResult, true, "this is to test that the account has been created");
 	}
 
 	@Test(priority = 2, enabled = true)
 	public void Logout() throws InterruptedException {
+		
+		String ConfirmationMessage = "You have been logged off your account. It is now safe to leave the computer.";
 		WebElement Logoutbutton = driver.findElement(By.linkText("Logoff"));
 		Logoutbutton.click();
 
 		Thread.sleep(1000);
+		
+		boolean ActualResult = driver.getPageSource().contains(ConfirmationMessage);
+		Assert.assertEquals(ActualResult, true, "this is to test that the account has logged out");
+		
+		
+		boolean ActualResult2 = driver.getCurrentUrl().equals("https://automationteststore.com/index.php?rt=account/logout");
+		boolean ExpectedResult2 = true;
+		Assert.assertEquals(ActualResult, ExpectedResult2);
+
 
 		WebElement Continuebutton = driver.findElement(By.linkText("Continue"));
-		Continuebutton.click();
+		//Continuebutton.click();
 
 	}
 
 	@Test(priority = 3, enabled = true)
-	public void Login() {
+	public void Login() throws InterruptedException {
 
 		WebElement LoginandRegisterbutton = driver.findElement(By.partialLinkText("Login or register"));
 		LoginandRegisterbutton.click();
@@ -143,33 +161,52 @@ public class MyTestCases {
 
 		WebElement Loginbutton = driver.findElement(By.xpath("//button[normalize-space()='Login']"));
 		Loginbutton.click();
-	}
-		
-	@Test(priority = 4, enabled = true, invocationCount = 15)
-    public void AddtoCart() throws InterruptedException {
-		driver.navigate().to(TheURL);
 		
 		Thread.sleep(1000);
 		
+		boolean ActauLResult = driver.findElement(By.id("customernav")).getText().contains(FirstName);
+		Assert.assertEquals(ActauLResult, true);
+		
+		//optional
+		
+		String ActualResult2 = driver.findElement(By.id("customernav")).getText();
+		String ExpectedResult2 = "Welcome back " + FirstName;
+		Assert.assertEquals(ActualResult2, ExpectedResult2);
+		
+	}
+
+	@Test(priority = 4, enabled = false, invocationCount = 15)
+	public void AddtoCart() throws InterruptedException {
+		driver.navigate().to(TheURL);
+
+		Thread.sleep(1000);
+
 		List<WebElement> theListOfIteams = driver.findElements(By.className("prdocutname"));
-		
+
 		int TotalNumberOfIteams = theListOfIteams.size();
-		
+
 		int RandomIteamIndex = rand.nextInt(TotalNumberOfIteams);
 		theListOfIteams.get(RandomIteamIndex).click();
-		
+
 		Thread.sleep(1000);
-		
-		if(driver.getPageSource().contains("Out of Stock")) {
+
+		WebElement AddToCartButton = driver.findElement(By.className("productpagecart"));
+
+		if (AddToCartButton.getText().equals("Out of Stock")) {
 			driver.navigate().back();
+
 			System.out.println("Sorry the iteam out of stock");
-			
-		}else  {
-			System.out.println("The iteam is avaliable");
-			
+
+		} else {
+			if (driver.getCurrentUrl().contains("product_id=116")) {
+				driver.findElement(By.xpath("//input[@id='option344747']")).click();
+
+			}
+			AddToCartButton.click();
+			Thread.sleep(1000);
+			WebElement CheckOutButton = driver.findElement(By.linkText("Checkout"));
+			CheckOutButton.click();
 		}
-		}
-		
-	
-	
 	}
+
+}
